@@ -8,8 +8,8 @@
  # 2. there is too much overhead in our output - can you please omit warnings and try to make it a single line, one for each port check result?
  # 
  # ========================================== #>
+ # port list
+ $ports = @(22, 80, 139, 443)
 
-Test-NetConnection 192.168.1.1 -Port 22
-Test-NetConnection 192.168.1.1 -Port 80
-Test-NetConnection 192.168.1.1 -Port 139
-Test-NetConnection 192.168.1.1 -Port 443
+ #one line of code, for each port, test and print out only name, port and if succeeded, ignore errors
+$ports | ForEach-Object {$res = Test-NetConnection 192.168.1.1 -Port $_ -WarningAction SilentlyContinue; "Name: $($res.ComputerName) - Port: $($res.RemotePort) - Succeeded: $($res.PingSucceeded)"}
