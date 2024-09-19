@@ -9,7 +9,13 @@
  # 
  # ========================================== #>
 
-Test-NetConnection 192.168.1.1 -Port 22
-Test-NetConnection 192.168.1.1 -Port 80
-Test-NetConnection 192.168.1.1 -Port 139
-Test-NetConnection 192.168.1.1 -Port 443
+ # port list
+ $ports = @(22, 80, 139, 443)
+
+ # for each port, test and print out only name, port and if succeeded, ignore errors
+foreach ($port in $ports) 
+{
+  $res = Test-NetConnection 192.168.1.1 -Port $port -WarningAction SilentlyContinue
+         "Name: $($res.ComputerName) - Port: $($res.RemotePort) - Succeeded: $($res.PingSucceeded)"
+}
+

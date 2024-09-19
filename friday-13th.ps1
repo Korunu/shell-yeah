@@ -7,4 +7,6 @@
  #
  # ========================================== #>
 
- 2022..2027 | ForEach-Object { "Fridays to stay in bed in " + $_ + "?" }
+
+#somehow a one liner that goes through every year, every month and searches for every 13th, if a found 13th is a friday, print out the month and year
+ 2022..2027 | % { $year = $_; 1..12 | % { $date = Get-Date -Year $year -Month $_ -Day 13; if ($date.DayOfWeek -eq 'Friday') { "Friday 13th to stay in bed on $((Get-Culture).DateTimeFormat.GetMonthName($date.Month)) $year"} } }
